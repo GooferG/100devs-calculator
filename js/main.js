@@ -1,20 +1,41 @@
-const button7 = document.getElementById('7');
-const button8 = document.getElementById('8');
-const button9 = document.getElementById('9');
-const buttonDivison = document.getElementById('/');
-const button4 = document.getElementById('4');
-const button5 = document.getElementById('5');
-const button6 = document.getElementById('6');
+let runningTotal = 0; // total calculation
+let buffer = '0'; // keep track of user input
+let previousOperator; // what was pressed previously (to display the appropriate result)
+
+document.querySelector('.calc-buttons').addEventListener('click', (event) => {
+  buttonClick(event.target.innerText);
+});
+
+function buttonClick(value) {
+  // function to handle the button clicks
+  if (isNaN(parseInt(value))) {
+    handleSymbol(value); // function will handle if the button is a symbol
+  } else {
+    handleNumber(value); // function will handle if the button is a number
+  }
+}
+
+function handleNumber(value) {
+  // will ensure to overwrite the buffer
+  if (buffer === '0') {
+    buffer = value;
+  } else {
+    buffer += value;
+  }
+  rerender();
+}
+
+function handleSymbol(value) {
+  if (buffer === '/') {
+    buffer / value;
+  }
+}
+
+function rerender() {
+  screen.innerText = buffer;
+}
 
 const screen = document.querySelector('.calc-screen');
-
-let runningTotal = 0;
-let buffer = '0';
-let previousOperator;
-
-button7.addEventListener('click', function () {
-  screen.innerText += '7';
-});
 
 const clear = document
   .getElementById('=')
