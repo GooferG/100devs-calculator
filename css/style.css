@@ -21,11 +21,6 @@ body {
   background-color: black;
 }
 
-.calc-buttons {
-  display: flex;
-  flex-direction: column;
-}
-
 .calc-screen {
   color: black;
   background-color: white;
@@ -55,5 +50,6 @@ body {
   background-color: #d8d9db;
   cursor: pointer;
   color: black;
+  margin: 5px 3px;
   /* transition: background-color 0.1s; */
 }
