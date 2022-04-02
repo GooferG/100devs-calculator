@@ -3,9 +3,9 @@ let buffer = '0'; // keep track of user input
 let previousOperator; // what was pressed previously (to display the appropriate result)
 const screen = document.querySelector('.calc-screen');
 
-document.querySelector('.calc-buttons').addEventListener('click', (event) => {
-  buttonClick(event.target.innerText);
-}); // way to select the button by the innerText (avoiding creating multiple querySelectors)
+// document.querySelector('.calc-buttons').addEventListener('click', (event) => {
+//   buttonClick(event.target.innerText);
+// }); // way to select the button by the innerText (avoiding creating multiple querySelectors)
 
 function buttonClick(value) {
   // to handle the button clicks
@@ -93,14 +93,15 @@ function rerender() {
   screen.innerText = buffer;
 }
 
-// function init() {
-//   document
-//     .querySelector('.calc-buttons')
-//     .addEventListener('click', function (event) {
-//       buttonClick(event.target.innerText);
-//     });
-// }
+function init() {
+  document.querySelectorAll('.calc-button').forEach((button) =>
+    button.addEventListener('click', (e) => {
+      buttonClick(e.target.innerText);
+    })
+  ); // way to select the button by the innerText (avoiding creating multiple querySelectors))
+}
 
+init();
 // const clear = document
 //   .getElementById('=')
 //   .addEventListener('click', () => (screen.innerText = '0'));
