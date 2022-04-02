@@ -59,3 +59,7 @@ body {
   margin: 5px 3px;
   /* transition: background-color 0.1s; */
 }
+
+.calc-button:hover {
+  background-color: lightgreen;
+}

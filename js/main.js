@@ -1,6 +1,6 @@
 let runningTotal = 0; // total calculation
 let buffer = '0'; // keep track of user input
-let previousOperator = null; // what was pressed previously (to display the appropriate result)
+let previousOperator; // what was pressed previously (to display the appropriate result)
 const screen = document.querySelector('.calc-screen');
 
 document.querySelector('.calc-buttons').addEventListener('click', (event) => {
@@ -27,15 +27,36 @@ function handleNumber(value) {
   rerender();
 }
 
+function handleMath(value) {
+  if (buffer === '0') {
+    return;
+  }
+
+  const intBuffer = parseInt(buffer);
+  if (runningTotal === 0) {
+    runningTotal = intBuffer;
+  } else {
+    flushOperation(intBuffer);
+  }
+
+  previousOperator = value;
+
+  buffer = '0';
+}
+
 function flushOperation(intBuffer) {
   // to produce the operations (-+/*)
   if (previousOperator === '+') {
+    console.log('+');
     runningTotal += intBuffer;
   } else if (previousOperator === '-') {
+    console.log('-');
     runningTotal -= intBuffer;
-  } else if (previousOperator === '*') {
+  } else if (previousOperator === 'x') {
+    console.log('x');
     runningTotal *= intBuffer;
   } else {
+    console.log('/');
     runningTotal /= intBuffer;
   }
 }
@@ -49,37 +70,36 @@ function handleSymbol(value) {
       break;
     case '=':
       if (previousOperator === null) {
+        console.log('=');
         return;
       }
       flushOperation(parseInt(buffer));
       previousOperator = null;
-      buffer = '' + runningTotal;
+      buffer = +runningTotal;
       runningTotal = 0;
+      break;
+    case '+':
+    case '-':
+    case 'x':
+    case '/':
+      handleMath(value);
       break;
   }
   rerender();
-}
-
-function handleMath(value) {
-  if (buffer === '0') {
-    return;
-  }
-  const intBuffer = parseInt(buffer);
-  if (runningTotal === 0) {
-    runningTotal = intBuffer;
-  } else {
-    flushOperation(intBuffer);
-  }
-
-  previousOperator = value;
-
-  buffer = 0;
 }
 
 function rerender() {
   // to put the buffer number on screen
   screen.innerText = buffer;
 }
+
+// function init() {
+//   document
+//     .querySelector('.calc-buttons')
+//     .addEventListener('click', function (event) {
+//       buttonClick(event.target.innerText);
+//     });
+// }
 
 // const clear = document
 //   .getElementById('=')
